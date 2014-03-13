@@ -61,20 +61,32 @@ public class DB {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{try {
+                prodsQuery.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            }}
         return name;
     }
 
     public void add(String name, String address, String contact, String other) throws ClassNotFoundException {
         try {
-            prodsQuery = dbc.connect().prepareStatement("INSERT INTO suppliers (name, address, contact, other)"
-                    + "VALUES (?,?,?,?)");
+          
+            prodsQuery = dbc.connect().prepareStatement("INSERT INTO 'suppliers' (name, address, contact, other)"
+                    + "VALUES (?,?,?,?);");
             prodsQuery.setString(1, name);
             prodsQuery.setString(2, address);
             prodsQuery.setString(3, contact);
             prodsQuery.setString(4, other);
-            prodsQuery.executeQuery();
+            prodsQuery.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        finally{try {
+                prodsQuery.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+}
     }
 }
