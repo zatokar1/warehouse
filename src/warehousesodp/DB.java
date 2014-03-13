@@ -72,6 +72,7 @@ public class DB {
             prodsQuery.setString(2, address);
             prodsQuery.setString(3, contact);
             prodsQuery.setString(4, other);
+            prodsQuery.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
