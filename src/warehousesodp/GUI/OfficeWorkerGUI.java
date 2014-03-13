@@ -1,7 +1,10 @@
 package warehousesodp.GUI;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import warehousesodp.TheHandler;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Ismail
  */
 public class OfficeWorkerGUI extends javax.swing.JFrame {
-
+TheHandler th=new TheHandler();
     /**
      * Creates new form OfficeWorkerGUI
      */
@@ -36,7 +39,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jtName = new javax.swing.JTextField();
-        jtCountact = new javax.swing.JTextField();
+        jtContact = new javax.swing.JTextField();
         jtOther = new javax.swing.JTextField();
         jtAddress = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
@@ -147,7 +150,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                    .addComponent(jtCountact, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                    .addComponent(jtContact, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                                     .addComponent(jtOther, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                                     .addComponent(jtName))
                                 .addGap(241, 241, 241))
@@ -194,7 +197,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtCountact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -227,9 +230,15 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+    try {
+        th.add(jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText());
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         if (!jtName.getText().trim().equals("")) {
-            model.addRow(new Object[]{jtName.getText(), jtAddress.getText(), jtCountact.getText(), jtOther.getText()});
+            model.addRow(new Object[]{jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText()});
    jLashow.setText(model.getRowCount()+"");
         } else {
             IMassage.setText(" Suppliers name should not be empty");
@@ -264,7 +273,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
         }
         model.setValueAt(jtName.getText(), SupplairTable.getSelectedRow(), 0);
         model.setValueAt(jtAddress.getText(), SupplairTable.getSelectedRow(), 1);
-        model.setValueAt(jtCountact.getText(), SupplairTable.getSelectedRow(), 2);
+        model.setValueAt(jtContact.getText(), SupplairTable.getSelectedRow(), 2);
         model.setValueAt(jtOther.getText(), SupplairTable.getSelectedRow(), 3);
     }//GEN-LAST:event_jButtonEditActionPerformed
 
@@ -272,7 +281,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         jtName.setText(model.getValueAt(SupplairTable.getSelectedRow(), 0).toString());
         jtAddress.setText(model.getValueAt(SupplairTable.getSelectedRow(), 1).toString());
-        jtCountact.setText(model.getValueAt(SupplairTable.getSelectedRow(), 2).toString());
+        jtContact.setText(model.getValueAt(SupplairTable.getSelectedRow(), 2).toString());
         jtOther.setText(model.getValueAt(SupplairTable.getSelectedRow(), 3).toString());
     }//GEN-LAST:event_jButtonRemoveMouseClicked
 
@@ -280,7 +289,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
         jtName.setText("");
         jtAddress.setText("");
         jtOther.setText("");
-        jtCountact.setText("");
+        jtContact.setText("");
     }//GEN-LAST:event_ClearbuttonActionPerformed
 
     private void ExitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitbuttonActionPerformed
@@ -339,7 +348,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLtital;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jtAddress;
-    private javax.swing.JTextField jtCountact;
+    private javax.swing.JTextField jtContact;
     private javax.swing.JTextField jtName;
     private javax.swing.JTextField jtOther;
     // End of variables declaration//GEN-END:variables

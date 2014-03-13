@@ -9,8 +9,11 @@ package warehousesodp;
  * @author Ondrej Tokar <zatokar@gmail.com, http://fuuu.sk/>
  */
 public class TheHandler {
-    DBConnect dbc=new DBConnect();
+    DB db=new DB();
   public void logIn(String name, char[] pwd) throws ClassNotFoundException{
-      dbc.setUsrAndPwd(name, pwd);
-  }  
+      db.setUsrAndPwd(name, pwd);
+  } 
+  public void add(String name, String address, String contact, String other) throws ClassNotFoundException{
+      db.add(name, address, contact, other);
+  }
 }

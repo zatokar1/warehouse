@@ -22,54 +22,23 @@ import warehousesodp.GUI.Login;
  */
 public class DBConnect {
 
-    String name, pwd;
-
-    public String connect() throws ClassNotFoundException {
-        
-        // register the driver 
-        Class.forName("org.sqlite.JDBC");
-
-        // now we set up a set of fairly basic string variables to use in the body of the code proper
-        final String sTempDb = "warehouseDB.sqlite";
-        final String sJdbc = "jdbc:sqlite";
-        final String sDbUrl = sJdbc + ":" + sTempDb;
-        final Statement s;
-        final ResultSet rs;
-        final String m;
-        // which will produce a legitimate Url for SqlLite JDBC :
-        // jdbc:sqlite:warehouseDB.sqlite
+    public Connection connect() throws ClassNotFoundException {
         try {
+            // register the driver 
+            Class.forName("org.sqlite.JDBC");
+            // now we set up a set of fairly basic string variables to use in the body of the code proper
+            final String sTempDb = "warehouseDB.sqlite";
+            final String sJdbc = "jdbc:sqlite";
+            final String sDbUrl = sJdbc + ":" + sTempDb;
+            // which will produce a legitimate Url for SqlLite JDBC :
+            // jdbc:sqlite:warehouseDB.sqlite
             // create a database connection
             Connection conn = DriverManager.getConnection(sDbUrl);
-            PreparedStatement prodsQuery = conn.prepareStatement("SELECT * FROM users where username"
-                    + "=? AND password=?");
-            prodsQuery.setString(1, name);
-            prodsQuery.setString(2, pwd);
-            rs = prodsQuery.executeQuery();
-            if (!rs.next()) {
-               JOptionPane.showMessageDialog(null, "Wrong username or password.");
-               new Login().setVisible(true);  
-               return "Error.";
-            }
+            return conn;
         } catch (SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         
-        return name;
-    }
-
-    public void setUsrAndPwd(String name, char[] pwd) throws ClassNotFoundException {
-        this.name = name;
-        this.pwd = new String(pwd);
-        String username=this.connect();
-        switch (username) {
-            case "office": {
-                new OfficeWorkerGUI().setVisible(true);
-             };
-            break;
-          // case "officeworker":new OfficeWorker().setVisible(true);
-             //  break;
-        }
-               
     }
 }
