@@ -341,9 +341,9 @@ TheHandler th=new TheHandler();
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         if (SupplairTable.getSelectedRow() == -1) { jLashow.setText(model.getRowCount()+"");
             if (SupplairTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this,"Suppliers Table is empty");
+                JOptionPane.showMessageDialog(this,"Suppliers table is empty.");
             } else {
-                JOptionPane.showMessageDialog(this,"Select the Supplier please");
+                JOptionPane.showMessageDialog(this,"Select the supplier please.");
             }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
         else {
@@ -366,9 +366,9 @@ TheHandler th=new TheHandler();
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         if (SupplairTable.getSelectedRow() == -1) {
             if (SupplairTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this,"Suppliers Table is empty");
+                JOptionPane.showMessageDialog(this,"Suppliers table is empty.");
             } else {
-                JOptionPane.showMessageDialog(this,"Select from Supplier please");
+                JOptionPane.showMessageDialog(this,"Select from supplier please.");
             }
         }
         else{
@@ -423,7 +423,7 @@ TheHandler th=new TheHandler();
    jLashow.setText(model.getRowCount()+"");
    AddGUI.dispose();
         } else {
-            JOptionPane.showMessageDialog(this," Suppliers name should not be empty");
+            JOptionPane.showMessageDialog(this," Suppliers name should not be empty.");
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
