@@ -1,9 +1,12 @@
 package warehousesodp.GUI;
 
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import warehousemodel.Supplier;
 import warehousesodp.TheHandler;
 
 /*
@@ -33,6 +36,28 @@ TheHandler th=new TheHandler();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        AddGUI = new javax.swing.JFrame();
+        jLabel1 = new javax.swing.JLabel();
+        jtName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jtAddress = new javax.swing.JTextField();
+        jtContact = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jtOther = new javax.swing.JTextField();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
+        EditGUI = new javax.swing.JFrame();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        editSupplierAdressField = new javax.swing.JTextField();
+        editSupplierContactField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        editSupplierOtherField = new javax.swing.JTextField();
+        jToggleButton3 = new javax.swing.JToggleButton();
+        jToggleButton4 = new javax.swing.JToggleButton();
+        editSupplierNameField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         SupplairTable = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
@@ -40,6 +65,184 @@ TheHandler th=new TheHandler();
         jButtonEdit = new javax.swing.JButton();
         Exitbutton = new javax.swing.JButton();
         jLashow = new javax.swing.JLabel();
+
+        AddGUI.setMinimumSize(new java.awt.Dimension(250, 300));
+
+        jLabel1.setText("Name ");
+
+        jtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtNameActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Address");
+
+        jLabel4.setText("Contact");
+
+        jLabel6.setText("Other");
+
+        jToggleButton1.setText("ADD");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton2.setSelected(true);
+        jToggleButton2.setText("Cancel");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout AddGUILayout = new javax.swing.GroupLayout(AddGUI.getContentPane());
+        AddGUI.getContentPane().setLayout(AddGUILayout);
+        AddGUILayout.setHorizontalGroup(
+            AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddGUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddGUILayout.createSequentialGroup()
+                        .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AddGUILayout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(22, 22, 22))
+                            .addGroup(AddGUILayout.createSequentialGroup()
+                                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtAddress)
+                            .addComponent(jtContact)
+                            .addComponent(jtOther)
+                            .addComponent(jtName, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(AddGUILayout.createSequentialGroup()
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        AddGUILayout.setVerticalGroup(
+            AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddGUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddGUILayout.createSequentialGroup()
+                        .addComponent(jtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddGUILayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtContact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtOther, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(AddGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        EditGUI.setMinimumSize(new java.awt.Dimension(250, 300));
+
+        jLabel3.setText("Name ");
+
+        jLabel5.setText("Address");
+
+        jLabel7.setText("Contact");
+
+        jLabel8.setText("Other");
+
+        jToggleButton3.setText("EDIT");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
+
+        jToggleButton4.setSelected(true);
+        jToggleButton4.setText("Cancel");
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton4ActionPerformed(evt);
+            }
+        });
+
+        editSupplierNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSupplierNameFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout EditGUILayout = new javax.swing.GroupLayout(EditGUI.getContentPane());
+        EditGUI.getContentPane().setLayout(EditGUILayout);
+        EditGUILayout.setHorizontalGroup(
+            EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EditGUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EditGUILayout.createSequentialGroup()
+                        .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(EditGUILayout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(22, 22, 22))
+                            .addGroup(EditGUILayout.createSequentialGroup()
+                                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(editSupplierAdressField)
+                            .addComponent(editSupplierContactField)
+                            .addComponent(editSupplierOtherField)
+                            .addComponent(editSupplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(EditGUILayout.createSequentialGroup()
+                        .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        EditGUILayout.setVerticalGroup(
+            EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EditGUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editSupplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EditGUILayout.createSequentialGroup()
+                        .addComponent(editSupplierAdressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EditGUILayout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editSupplierContactField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editSupplierOtherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,8 +296,9 @@ TheHandler th=new TheHandler();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,52 +311,52 @@ TheHandler th=new TheHandler();
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jButtonAdd)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLashow, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEdit))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonRemove)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Exitbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAdd)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLashow, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonEdit))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonRemove)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                        .addComponent(Exitbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-    try {
-        th.add(jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText());
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
-        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
-        if (!jtName.getText().trim().equals("")) {
-            model.addRow(new Object[]{jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText()});
-   jLashow.setText(model.getRowCount()+"");
-        } else {
-            IMassage.setText(" Suppliers name should not be empty");
-        }
+            AddGUI.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveActionPerformed
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         if (SupplairTable.getSelectedRow() == -1) { jLashow.setText(model.getRowCount()+"");
             if (SupplairTable.getRowCount() == 0) {
-                IMassage.setText("Suppliers Table is empty");
+                JOptionPane.showMessageDialog(this,"Suppliers Table is empty");
             } else {
-                IMassage.setText("Selct the Supplier pleas");
+                JOptionPane.showMessageDialog(this,"Select the Supplier please");
             }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
         else {
+            try{
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove supplier from the list?");
+            if (confirm == 0){
+                if (removeSupplier()){
             model.removeRow(SupplairTable.getSelectedRow());
-            
+            }
+            }}
+            catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
+            }     
         }
     
    
@@ -162,28 +366,94 @@ TheHandler th=new TheHandler();
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
         if (SupplairTable.getSelectedRow() == -1) {
             if (SupplairTable.getRowCount() == 0) {
-                IMassage.setText("Suppliers Table is empty");
+                JOptionPane.showMessageDialog(this,"Suppliers Table is empty");
             } else {
-                IMassage.setText("Selct from Supplier pleas");
+                JOptionPane.showMessageDialog(this,"Select from Supplier please");
             }
         }
-        model.setValueAt(jtName.getText(), SupplairTable.getSelectedRow(), 0);
-        model.setValueAt(jtAddress.getText(), SupplairTable.getSelectedRow(), 1);
-        model.setValueAt(jtContact.getText(), SupplairTable.getSelectedRow(), 2);
-        model.setValueAt(jtOther.getText(), SupplairTable.getSelectedRow(), 3);
+        else{
+//            try{
+//           String nameToEdit = String.valueOf(SupplairTable.getValueAt(SupplairTable.getSelectedRow(),0));
+//           Supplier supplier = th.get(nameToEdit);
+//           if (supplier != null){
+//               EditGUI.setVisible(true);
+//               editSupplierNameField.setText(supplier.getName());
+//               editSupplierAdressField.setText(supplier.getAdress());
+//               editSupplierContactField.setText(supplier.getContact());
+//               editSupplierOtherField.setText(supplier.getOther());
+//           }
+//            } 
+//            catch (ClassNotFoundException | SQLException e){
+//                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
+//            }
+            try{
+           String nameToEdit = String.valueOf(SupplairTable.getValueAt(SupplairTable.getSelectedRow(),0));
+           Supplier supplier = th.get(nameToEdit);
+           if (supplier != null){
+               JOptionPane.showMessageDialog(this,"fuck you");
+           }}
+                        catch (ClassNotFoundException | SQLException e){
+                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemoveMouseClicked
         DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
-        jtName.setText(model.getValueAt(SupplairTable.getSelectedRow(), 0).toString());
-        jtAddress.setText(model.getValueAt(SupplairTable.getSelectedRow(), 1).toString());
-        jtContact.setText(model.getValueAt(SupplairTable.getSelectedRow(), 2).toString());
-        jtOther.setText(model.getValueAt(SupplairTable.getSelectedRow(), 3).toString());
     }//GEN-LAST:event_jButtonRemoveMouseClicked
 
     private void ExitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitbuttonActionPerformed
         System.exit(WIDTH);
     }//GEN-LAST:event_ExitbuttonActionPerformed
+
+    private void jtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtNameActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        try {
+        th.add(jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText());
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        
+        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
+        if (!jtName.getText().trim().equals("")) {
+            model.addRow(new Object[]{jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText()});
+   jLashow.setText(model.getRowCount()+"");
+   AddGUI.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this," Suppliers name should not be empty");
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        AddGUI.dispose();
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+         String newName = editSupplierNameField.getText();
+        String adress = editSupplierAdressField.getText();
+        String contact = editSupplierContactField.getText();
+        String other = editSupplierOtherField.getText();
+        try{
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure?");
+            if (confirm == 0){
+        th.updateSupplier(th.supplier.getName(), newName, adress, contact, other);}
+            EditGUI.dispose();
+        }
+        catch(ClassNotFoundException | SQLException e){
+                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
+                }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        EditGUI.dispose();
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
+
+    private void editSupplierNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSupplierNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editSupplierNameFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,14 +489,48 @@ TheHandler th=new TheHandler();
             }
         });
     }
+    
+    public final boolean removeSupplier() throws ClassNotFoundException, SQLException{
+        boolean result = false;
+        
+        int row = SupplairTable.getSelectedRow();
+        if (SupplairTable.isRowSelected(row)){
+            String nameToRemove = String.valueOf(SupplairTable.getValueAt(row,0));
+            th.remove(nameToRemove);
+            result = true;
+        }
+        return(result);        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame AddGUI;
+    private javax.swing.JFrame EditGUI;
     private javax.swing.JButton Exitbutton;
     private javax.swing.JTable SupplairTable;
+    private javax.swing.JTextField editSupplierAdressField;
+    private javax.swing.JTextField editSupplierContactField;
+    private javax.swing.JTextField editSupplierNameField;
+    private javax.swing.JTextField editSupplierOtherField;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JButton jButtonRemove;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLashow;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JTextField jtAddress;
+    private javax.swing.JTextField jtContact;
+    private javax.swing.JTextField jtName;
+    private javax.swing.JTextField jtOther;
     // End of variables declaration//GEN-END:variables
 }
