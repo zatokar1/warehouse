@@ -89,4 +89,26 @@ public class ItemsDB {
             }
         }
     }
+    public void export(String name, int quantity){
+        try {
+            prodsQuery = dbc.connect().prepareStatement("UPDATE items SET quantity= quantity + ? WHERE name=?");
+                       
+               prodsQuery.setInt(1, quantity);
+               prodsQuery.setString(2, name);
+               prodsQuery.executeUpdate();
+               prodsQuery.close();
+               
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String strDate = sdf.format(new Date());
+            prodsQuery = dbc.connect().prepareStatement("INSERT INTO 'orders' (name, quantity, date)"
+                    + "VALUES (?,?,?);");
+            prodsQuery.setString(1, name);
+            prodsQuery.setInt(2, quantity);
+            prodsQuery.setString(3, strDate);
+            prodsQuery.executeUpdate();
+            prodsQuery.close();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(ItemsDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
