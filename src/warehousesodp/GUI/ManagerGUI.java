@@ -4,8 +4,11 @@
  */
 package warehousesodp.GUI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import warehousemodel.Item;
 import warehousesodp.ItemsDB;
 import warehousesodp.LoadDataToJTable;
 
@@ -15,6 +18,7 @@ import warehousesodp.LoadDataToJTable;
  */
 public class ManagerGUI extends javax.swing.JFrame {
  private final DefaultTableModel tableModel = new DefaultTableModel();
+ 
  ItemsDB idb= new ItemsDB();
  LoadDataToJTable loadData = new LoadDataToJTable();
     /**
@@ -48,6 +52,7 @@ public class ManagerGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemsTable = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         orderGUI.setMinimumSize(new java.awt.Dimension(395, 131));
 
@@ -146,6 +151,13 @@ public class ManagerGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(itemsTable);
 
+        jButton2.setText("Export");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,17 +168,21 @@ public class ManagerGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(31, 31, 31))))
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
+                .addGap(48, 48, 48)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(112, 112, 112))
@@ -196,9 +212,17 @@ public class ManagerGUI extends javax.swing.JFrame {
         }
         else{
             Item item = idb.getItem(productLabel.getText());            
-            idb.order(item.getName(),Integer.parseInt(amountOrderField.getText()),item.getLoc());
+            try {
+                idb.order(item.getName(),Integer.parseInt(amountOrderField.getText()),item.getLoc());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ManagerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_orderGUIButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+idb.export();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +286,7 @@ public class ManagerGUI extends javax.swing.JFrame {
     private javax.swing.JButton cancelOrderGUIButton;
     private javax.swing.JTable itemsTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
