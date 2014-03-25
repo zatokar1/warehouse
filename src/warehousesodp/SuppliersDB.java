@@ -21,7 +21,7 @@ import warehousesodp.GUI.OfficeWorkerGUI;
  */
 public class SuppliersDB {
 
-    String name, pwd;
+   
     Statement s = null;
     ResultSet rs = null;
     String m = null;
