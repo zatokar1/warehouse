@@ -4,6 +4,7 @@
  */
 package warehousesodp.GUI;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import warehousesodp.ItemsDB;
 import warehousesodp.LoadDataToJTable;
@@ -34,10 +35,92 @@ public class ManagerGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        orderGUI = new javax.swing.JFrame();
+        jLabel2 = new javax.swing.JLabel();
+        productLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        amountLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        amountOrderField = new javax.swing.JTextField();
+        cancelOrderGUIButton = new javax.swing.JButton();
+        orderGUIButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemsTable = new javax.swing.JTable();
+
+        orderGUI.setMinimumSize(new java.awt.Dimension(395, 131));
+
+        jLabel2.setText("Order");
+
+        productLabel.setText("name_of_product");
+
+        jLabel5.setText("in stock:");
+
+        amountLabel.setText("amount");
+
+        jLabel3.setText("Amount to order");
+
+        amountOrderField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        cancelOrderGUIButton.setText("cancel");
+        cancelOrderGUIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelOrderGUIButtonActionPerformed(evt);
+            }
+        });
+
+        orderGUIButton.setText("order");
+        orderGUIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderGUIButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout orderGUILayout = new javax.swing.GroupLayout(orderGUI.getContentPane());
+        orderGUI.getContentPane().setLayout(orderGUILayout);
+        orderGUILayout.setHorizontalGroup(
+            orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(orderGUILayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(orderGUILayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(30, 30, 30)
+                        .addComponent(productLabel)
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(amountLabel))
+                    .addGroup(orderGUILayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(amountOrderField))
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelOrderGUIButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(orderGUIButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        orderGUILayout.setVerticalGroup(
+            orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(orderGUILayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(productLabel)
+                    .addComponent(jLabel5)
+                    .addComponent(amountLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(orderGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(amountOrderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelOrderGUIButton)
+                    .addComponent(orderGUIButton))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,7 +181,24 @@ public class ManagerGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         loadData();
+        if(openOrderGUI() == true){
+        orderGUI.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cancelOrderGUIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelOrderGUIButtonActionPerformed
+        orderGUI.setVisible(false);
+    }//GEN-LAST:event_cancelOrderGUIButtonActionPerformed
+
+    private void orderGUIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderGUIButtonActionPerformed
+        if (amountOrderField.getText().equals("") || amountOrderField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Fill amount first!");
+        }
+        else{
+            Item item = idb.getItem(productLabel.getText());            
+            idb.order(item.getName(),Integer.parseInt(amountOrderField.getText()),item.getLoc());
+        }
+    }//GEN-LAST:event_orderGUIButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,10 +237,38 @@ public class ManagerGUI extends javax.swing.JFrame {
     public void loadData(){
        loadData.loadData(idb.getItemsRS(), tableModel);
     }
+    
+    public boolean openOrderGUI(){
+        boolean result = false;
+        if (itemsTable.getSelectedRow() == -1) {
+            if (itemsTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Suppliers table is empty.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Select from supplier please.");
+            }
+        }
+            else{
+                    String nameToOrder = String.valueOf(itemsTable.getValueAt(itemsTable.getSelectedRow(), 0));
+                    String amount = String.valueOf(itemsTable.getValueAt(itemsTable.getSelectedRow(), 1));
+                    productLabel.setText(nameToOrder);
+                    amountLabel.setText(amount);
+                    result=true;
+                    }
+        return(result);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel amountLabel;
+    private javax.swing.JTextField amountOrderField;
+    private javax.swing.JButton cancelOrderGUIButton;
     private javax.swing.JTable itemsTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JFrame orderGUI;
+    private javax.swing.JButton orderGUIButton;
+    private javax.swing.JLabel productLabel;
     // End of variables declaration//GEN-END:variables
 }
