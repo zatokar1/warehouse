@@ -33,4 +33,25 @@ public class ItemsDB {
         }
         return rs;
 }
+    
+     public void order(String name, int quantity, String location) throws ClassNotFoundException {
+        try {
+
+            prodsQuery = dbc.connect().prepareStatement("INSERT INTO 'items' (name, quantity, location)"
+                    + "VALUES (?,?,?);");
+            prodsQuery.setString(1, name);
+            prodsQuery.setInt(2, quantity);
+            prodsQuery.setString(3, location);
+            prodsQuery.executeUpdate();
+            prodsQuery.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                prodsQuery.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
