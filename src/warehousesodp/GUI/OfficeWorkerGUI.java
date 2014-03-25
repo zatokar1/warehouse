@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import warehousemodel.Supplier;
+import warehousesodp.LoadDataToJTable;
 import warehousesodp.SuppliersDB;
 import warehousesodp.TheHandler;
 
@@ -26,6 +27,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
     TheHandler th = new TheHandler();
     Supplier supplierToEdit;
     SuppliersDB db = new SuppliersDB();
+    LoadDataToJTable loadData=new LoadDataToJTable();
     private final DefaultTableModel tableModel = new DefaultTableModel();
     /**
      * Creates new form OfficeWorkerGUI
@@ -262,7 +264,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Address", "Countact", "Other"
+                "Name", "Address", "Contact", "Other"
             }
         ));
         jScrollPane1.setViewportView(SupplierTable);
@@ -347,32 +349,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonAddActionPerformed
     private void loadData() {
-        try {
-            ResultSet rs = db.getRS();
-            ResultSetMetaData metaData = rs.getMetaData();
-
-            // Names of columns
-            Vector<String> columnNames = new Vector<String>();
-            int columnCount = metaData.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(metaData.getColumnName(i));
-            }
-
-            // Data of the table
-            Vector<Vector<Object>> data = new Vector<>();
-            while (rs.next()) {
-                Vector<Object> vector = new Vector<>();
-                for (int i = 1; i <= columnCount; i++) {
-                    vector.add(rs.getObject(i));
-                }
-                data.add(vector);
-            }
-
-            tableModel.setDataVector(data, columnNames);
-        } catch (SQLException ex) {
-            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    loadData.loadData(db.getRS(), tableModel);
     }
     private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveActionPerformed
         DefaultTableModel model = (DefaultTableModel) SupplierTable.getModel();

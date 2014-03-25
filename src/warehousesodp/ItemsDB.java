@@ -6,7 +6,10 @@ package warehousesodp;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,4 +22,15 @@ public class ItemsDB {
     String m = null;
     PreparedStatement prodsQuery;
     DBConnect dbc = new DBConnect();
+    
+    public ResultSet getItemsRS(){
+        try {
+            prodsQuery = dbc.connect().prepareStatement("SELECT * FROM items");
+            rs = prodsQuery.executeQuery();
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+}
 }

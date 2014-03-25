@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import warehousesodp.GUI.Login;
+import warehousesodp.GUI.ManagerGUI;
 import warehousesodp.GUI.OfficeWorkerGUI;
 
 /**
@@ -35,8 +36,8 @@ public class UsersDB {
                     new OfficeWorkerGUI().setVisible(true);
                 };
                 break;
-                // case "officeworker":new OfficeWorker().setVisible(true);
-                //  break;
+                case "manager":new ManagerGUI().setVisible(true);
+                break;
             }
         } catch (SQLException ex) {
             Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
