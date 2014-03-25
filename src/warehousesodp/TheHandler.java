@@ -24,6 +24,7 @@ public class TheHandler {
   
   public void remove(String name) throws ClassNotFoundException, SQLException{
       db.remove(name);
+      System.out.println(name);
   }
   
   public Supplier get(String name) throws ClassNotFoundException,SQLException{

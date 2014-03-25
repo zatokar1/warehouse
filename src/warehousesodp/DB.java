@@ -4,8 +4,6 @@
  */
 package warehousesodp;
 
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +36,7 @@ public class DB {
             switch (username) {
                 case "office": {
                     new OfficeWorkerGUI().setVisible(true);
-                }
-                ;
+                };
                 break;
                 // case "officeworker":new OfficeWorker().setVisible(true);
                 //  break;
@@ -48,7 +45,16 @@ public class DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+public ResultSet getRS(){
+        try {
+            prodsQuery = dbc.connect().prepareStatement("SELECT * FROM suppliers");
+            rs = prodsQuery.executeQuery();
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+}
     public String logIn() throws SQLException {
         try {
             prodsQuery = dbc.connect().prepareStatement("SELECT * FROM users where username"
@@ -59,22 +65,25 @@ public class DB {
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(null, "Wrong username or password.");
                 new Login().setVisible(true);
+                prodsQuery.close();
                 return "Error.";
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{try {
+        } finally {
+            try {
                 prodsQuery.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-            }}
+            }
+        }
+       
         return name;
     }
 
     public void add(String name, String address, String contact, String other) throws ClassNotFoundException {
         try {
-          
+
             prodsQuery = dbc.connect().prepareStatement("INSERT INTO 'suppliers' (name, address, contact, other)"
                     + "VALUES (?,?,?,?);");
             prodsQuery.setString(1, name);
@@ -82,89 +91,66 @@ public class DB {
             prodsQuery.setString(3, contact);
             prodsQuery.setString(4, other);
             prodsQuery.executeUpdate();
+            prodsQuery.close();
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{try {
+        } finally {
+            try {
                 prodsQuery.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
             }
-}
+        }
     }
-    
-    public void remove(String name) throws ClassNotFoundException{
-        Statement stmt = null;
-        Connection con = dbc.connect();
-        String query = "delete from suppliers where name = "+name;
-            try { 
-            stmt = con.createStatement();        
-              
-            stmt.execute(query);
+
+    public void remove(String name) throws ClassNotFoundException {
+        try {
+            prodsQuery = dbc.connect().prepareStatement("DELETE FROM suppliers WHERE name=?");
+            prodsQuery.setString(1, name);
+            prodsQuery.executeUpdate();
+            System.out.println("removed");
+            prodsQuery.close();
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                prodsQuery.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        finally {
-             if (stmt != null) {  
-    try {  
-     stmt.close();  
-    } catch (SQLException e) {  
-     Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, e);
-    }  
-   }  
-   if (con != null) {  
-    try {  
-     con.close();  
-    } catch (SQLException e) {  
-     Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, e); 
-    }  
-   }            
-    }}
-    
-    public Supplier getSupplier(String name) throws ClassNotFoundException, SQLException{
-        Supplier result=null;
-        Statement stmt = null;
-        String query = "select name, contact, adress, other from warehouseDB.suppliers";
-    try {
-        Connection con = dbc.connect();
-        stmt = con.createStatement();
-        rs = stmt.executeQuery(query);
-        while (rs.next()) {
-            String newName = rs.getString("name");
-            if (newName.equals(name)){
-            String adress = rs.getString("adress");
+
+    }
+
+    public Supplier getSupplier(String name) throws ClassNotFoundException, SQLException {
+        Statement st = dbc.connect().createStatement();
+        String sql = ("SELECT * FROM suppliers WHERE name=" + "'"+name+"'");
+        ResultSet rs = st.executeQuery(sql);
+        Supplier supplier = null;
+        if (rs.next()) {
+
+            String address = rs.getString("address");
             String contact = rs.getString("contact");
             String other = rs.getString("other");
-            result = new Supplier(newName, adress, contact, other);
-            }
+            supplier = new Supplier(name, address, contact, other);
         }
-    } catch (SQLException e ) {
-    } finally {
-        if (stmt != null) { stmt.close(); }
+        rs.close();
+        st.close();
+        return supplier;
     }
-        return(result);
-    }
-    
-    public void updateSupplier(String name, String newName, String adress, String contact, String other) throws ClassNotFoundException, SQLException{ 
-        Supplier supplier = getSupplier(name);
-        if (supplier != null){
-        try {
-          
-            prodsQuery = dbc.connect().prepareStatement("UPDATE supplier SET name = ?,adress = ?,contact = ?,other = ? WHERE name = '"+name+"'");
-            prodsQuery.setString(1, name);
-            prodsQuery.setString(2, adress);
-            prodsQuery.setString(3, contact);
-            prodsQuery.setString(4, other);
-            prodsQuery.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{try {
+
+    public void updateSupplier(String name, String newName, String address, String contact, String other) throws ClassNotFoundException, SQLException {
+        
+        
+                System.out.println("Chystam sa updatnut suppliera: old name: "+name+" new name: "+newName+" address: "+address+" contact "+contact+" other: "+other);
+                prodsQuery = dbc.connect().prepareStatement("UPDATE suppliers SET name = ?,address = ?,contact = ?,other = ? WHERE name = ?");
+                prodsQuery.setString(1, newName);
+                prodsQuery.setString(2, address);
+                prodsQuery.setString(3, contact);
+                prodsQuery.setString(4, other);
+                prodsQuery.setString(5, name);
+                prodsQuery.executeUpdate();
                 prodsQuery.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-}
+            
     }
-}
 }

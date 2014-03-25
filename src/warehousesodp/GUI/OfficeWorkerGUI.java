@@ -1,12 +1,15 @@
 package warehousesodp.GUI;
 
-
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import warehousemodel.Supplier;
+import warehousesodp.DB;
 import warehousesodp.TheHandler;
 
 /*
@@ -19,12 +22,18 @@ import warehousesodp.TheHandler;
  * @author Ismail
  */
 public class OfficeWorkerGUI extends javax.swing.JFrame {
-TheHandler th=new TheHandler();
+
+    TheHandler th = new TheHandler();
+    Supplier supplierToEdit;
+    DB db = new DB();
+    private final DefaultTableModel tableModel = new DefaultTableModel();
     /**
      * Creates new form OfficeWorkerGUI
      */
     public OfficeWorkerGUI() {
         initComponents();
+        SupplierTable.setModel(tableModel);
+        loadData();
     }
 
     /**
@@ -55,11 +64,11 @@ TheHandler th=new TheHandler();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         editSupplierOtherField = new javax.swing.JTextField();
-        jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
         editSupplierNameField = new javax.swing.JTextField();
+        EditInEditGUIButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        SupplairTable = new javax.swing.JTable();
+        SupplierTable = new javax.swing.JTable();
         jButtonAdd = new javax.swing.JButton();
         jButtonRemove = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
@@ -89,7 +98,6 @@ TheHandler th=new TheHandler();
             }
         });
 
-        jToggleButton2.setSelected(true);
         jToggleButton2.setText("Cancel");
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,13 +173,6 @@ TheHandler th=new TheHandler();
 
         jLabel8.setText("Other");
 
-        jToggleButton3.setText("EDIT");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
-            }
-        });
-
         jToggleButton4.setSelected(true);
         jToggleButton4.setText("Cancel");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +184,13 @@ TheHandler th=new TheHandler();
         editSupplierNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editSupplierNameFieldActionPerformed(evt);
+            }
+        });
+
+        EditInEditGUIButton.setText("Edit");
+        EditInEditGUIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditInEditGUIButtonActionPerformed(evt);
             }
         });
 
@@ -199,19 +207,20 @@ TheHandler th=new TheHandler();
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(22, 22, 22))
                             .addGroup(EditGUILayout.createSequentialGroup()
+                                .addGap(11, 11, 11)
                                 .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
                         .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(editSupplierAdressField)
                             .addComponent(editSupplierContactField)
                             .addComponent(editSupplierOtherField)
                             .addComponent(editSupplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(EditGUILayout.createSequentialGroup()
-                        .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EditInEditGUIButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -238,17 +247,17 @@ TheHandler th=new TheHandler();
                     .addComponent(editSupplierOtherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
-                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(EditGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(EditInEditGUIButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        SupplairTable.setBackground(new java.awt.Color(102, 102, 102));
-        SupplairTable.setFont(new java.awt.Font("MS Reference Sans Serif", 2, 12)); // NOI18N
-        SupplairTable.setModel(new javax.swing.table.DefaultTableModel(
+        SupplierTable.setBackground(new java.awt.Color(102, 102, 102));
+        SupplierTable.setFont(new java.awt.Font("MS Reference Sans Serif", 2, 12)); // NOI18N
+        SupplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -256,7 +265,7 @@ TheHandler th=new TheHandler();
                 "Name", "Address", "Countact", "Other"
             }
         ));
-        jScrollPane1.setViewportView(SupplairTable);
+        jScrollPane1.setViewportView(SupplierTable);
 
         jButtonAdd.setText("Add");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -334,44 +343,73 @@ TheHandler th=new TheHandler();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-            AddGUI.setVisible(true);
+        AddGUI.setVisible(true);
+        
     }//GEN-LAST:event_jButtonAddActionPerformed
+    private void loadData() {
+        try {
+            ResultSet rs = db.getRS();
+            ResultSetMetaData metaData = rs.getMetaData();
 
+            // Names of columns
+            Vector<String> columnNames = new Vector<String>();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames.add(metaData.getColumnName(i));
+            }
+
+            // Data of the table
+            Vector<Vector<Object>> data = new Vector<>();
+            while (rs.next()) {
+                Vector<Object> vector = new Vector<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    vector.add(rs.getObject(i));
+                }
+                data.add(vector);
+            }
+
+            tableModel.setDataVector(data, columnNames);
+        } catch (SQLException ex) {
+            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveActionPerformed
-        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
-        if (SupplairTable.getSelectedRow() == -1) { jLashow.setText(model.getRowCount()+"");
-            if (SupplairTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this,"Suppliers table is empty.");
+        DefaultTableModel model = (DefaultTableModel) SupplierTable.getModel();
+        if (SupplierTable.getSelectedRow() == -1) {
+            jLashow.setText(model.getRowCount() + "");
+            if (SupplierTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Suppliers table is empty.");
             } else {
-                JOptionPane.showMessageDialog(this,"Select the supplier please.");
+                JOptionPane.showMessageDialog(this, "Select the supplier please.");
             }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
         else {
-            try{
+            try {
                 int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to remove supplier from the list?");
-            if (confirm == 0){
-                if (removeSupplier()){
-            model.removeRow(SupplairTable.getSelectedRow());
+                if (confirm == 0) {
+                    if (removeSupplier()) {
+                        model.removeRow(SupplierTable.getSelectedRow());
+                        loadData();
+                    }
+                }
+            } catch (ClassNotFoundException | SQLException e) {
+                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
             }
-            }}
-            catch (ClassNotFoundException | SQLException e){
-            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
-            }     
         }
-    
-   
-    
-}
+
+
+
+    }
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
-        if (SupplairTable.getSelectedRow() == -1) {
-            if (SupplairTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this,"Suppliers table is empty.");
+        DefaultTableModel model = (DefaultTableModel) SupplierTable.getModel();
+        if (SupplierTable.getSelectedRow() == -1) {
+            if (SupplierTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Suppliers table is empty.");
             } else {
-                JOptionPane.showMessageDialog(this,"Select from supplier please.");
+                JOptionPane.showMessageDialog(this, "Select from supplier please.");
             }
-        }
-        else{
+        } else {
 //            try{
 //           String nameToEdit = String.valueOf(SupplairTable.getValueAt(SupplairTable.getSelectedRow(),0));
 //           Supplier supplier = th.get(nameToEdit);
@@ -386,20 +424,25 @@ TheHandler th=new TheHandler();
 //            catch (ClassNotFoundException | SQLException e){
 //                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
 //            }
-            try{
-           String nameToEdit = String.valueOf(SupplairTable.getValueAt(SupplairTable.getSelectedRow(),0));
-           Supplier supplier = th.get(nameToEdit);
-           if (supplier != null){
-               JOptionPane.showMessageDialog(this,"fuck you");
-           }}
-                        catch (ClassNotFoundException | SQLException e){
+            try {
+                String nameToEdit = String.valueOf(SupplierTable.getValueAt(SupplierTable.getSelectedRow(), 0));
+                supplierToEdit = th.get(nameToEdit);
+
+                if (supplierToEdit != null) {
+                    EditGUI.setVisible(true);
+                    editSupplierNameField.setText(supplierToEdit.getName());
+                    editSupplierAdressField.setText(supplierToEdit.getAdress());
+                    editSupplierContactField.setText(supplierToEdit.getContact());
+                    editSupplierOtherField.setText(supplierToEdit.getOther());
+                }
+            } catch (ClassNotFoundException | SQLException e) {
                 Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemoveMouseClicked
-        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) SupplierTable.getModel();
     }//GEN-LAST:event_jButtonRemoveMouseClicked
 
     private void ExitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitbuttonActionPerformed
@@ -412,40 +455,26 @@ TheHandler th=new TheHandler();
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         try {
-        th.add(jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText());
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
-        DefaultTableModel model = (DefaultTableModel) SupplairTable.getModel();
+            th.add(jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        DefaultTableModel model = (DefaultTableModel) SupplierTable.getModel();
         if (!jtName.getText().trim().equals("")) {
             model.addRow(new Object[]{jtName.getText(), jtAddress.getText(), jtContact.getText(), jtOther.getText()});
-   jLashow.setText(model.getRowCount()+"");
-   AddGUI.dispose();
+            jLashow.setText(model.getRowCount() + "");
+             
+            AddGUI.dispose();
+            loadData();
         } else {
-            JOptionPane.showMessageDialog(this," Suppliers name should not be empty.");
+            JOptionPane.showMessageDialog(this, " Suppliers name should not be empty.");
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         AddGUI.dispose();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
-
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-         String newName = editSupplierNameField.getText();
-        String adress = editSupplierAdressField.getText();
-        String contact = editSupplierContactField.getText();
-        String other = editSupplierOtherField.getText();
-        try{
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure?");
-            if (confirm == 0){
-        th.updateSupplier(th.supplier.getName(), newName, adress, contact, other);}
-            EditGUI.dispose();
-        }
-        catch(ClassNotFoundException | SQLException e){
-                Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
-                }
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         EditGUI.dispose();
@@ -454,6 +483,23 @@ TheHandler th=new TheHandler();
     private void editSupplierNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSupplierNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_editSupplierNameFieldActionPerformed
+
+    private void EditInEditGUIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditInEditGUIButtonActionPerformed
+        String newName = editSupplierNameField.getText();
+        String address = editSupplierAdressField.getText();
+        String contact = editSupplierContactField.getText();
+        String other = editSupplierOtherField.getText();
+        try {
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure?");
+            if (confirm == 0) {
+                th.updateSupplier(supplierToEdit.getName(), newName, address, contact, other);
+            }
+            EditGUI.dispose();
+            loadData();
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(OfficeWorkerGUI.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_EditInEditGUIButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -489,24 +535,23 @@ TheHandler th=new TheHandler();
             }
         });
     }
-    
-    public final boolean removeSupplier() throws ClassNotFoundException, SQLException{
-        boolean result = false;
-        
-        int row = SupplairTable.getSelectedRow();
-        if (SupplairTable.isRowSelected(row)){
-            String nameToRemove = String.valueOf(SupplairTable.getValueAt(row,0));
-            th.remove(nameToRemove);
-            result = true;
-        }
-        return(result);        
-    }
 
+    public final boolean removeSupplier() throws ClassNotFoundException, SQLException {
+
+        int row = SupplierTable.getSelectedRow();
+        if (SupplierTable.isRowSelected(row)) {
+            String nameToRemove = String.valueOf(SupplierTable.getValueAt(row, 0));
+            th.remove(nameToRemove);
+            return true;
+        }
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame AddGUI;
     private javax.swing.JFrame EditGUI;
+    private javax.swing.JButton EditInEditGUIButton;
     private javax.swing.JButton Exitbutton;
-    private javax.swing.JTable SupplairTable;
+    private javax.swing.JTable SupplierTable;
     private javax.swing.JTextField editSupplierAdressField;
     private javax.swing.JTextField editSupplierContactField;
     private javax.swing.JTextField editSupplierNameField;
@@ -526,7 +571,6 @@ TheHandler th=new TheHandler();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JTextField jtAddress;
     private javax.swing.JTextField jtContact;
