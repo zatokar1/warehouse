@@ -221,7 +221,7 @@ public class ManagerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_orderGUIButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-idb.export();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
