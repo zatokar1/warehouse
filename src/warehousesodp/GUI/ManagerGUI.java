@@ -4,8 +4,11 @@
  */
 package warehousesodp.GUI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import warehousemodel.Item;
 import warehousesodp.ItemsDB;
 import warehousesodp.LoadDataToJTable;
 
@@ -44,10 +47,21 @@ public class ManagerGUI extends javax.swing.JFrame {
         amountOrderField = new javax.swing.JTextField();
         cancelOrderGUIButton = new javax.swing.JButton();
         orderGUIButton = new javax.swing.JButton();
+        newItemGUI = new javax.swing.JFrame();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
+        quantityField = new javax.swing.JTextField();
+        locField = new javax.swing.JTextField();
+        newItemButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemsTable = new javax.swing.JTable();
+        orderNewButton = new javax.swing.JButton();
 
         orderGUI.setMinimumSize(new java.awt.Dimension(395, 131));
 
@@ -122,6 +136,83 @@ public class ManagerGUI extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
+        newItemGUI.setMinimumSize(new java.awt.Dimension(202, 289));
+
+        jLabel4.setText("Order new item");
+
+        jLabel6.setText("Name");
+
+        jLabel7.setText("Quantity");
+
+        jLabel8.setText("Location");
+
+        quantityField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        newItemButton.setText("order");
+        newItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newItemButtonActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout newItemGUILayout = new javax.swing.GroupLayout(newItemGUI.getContentPane());
+        newItemGUI.getContentPane().setLayout(newItemGUILayout);
+        newItemGUILayout.setHorizontalGroup(
+            newItemGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newItemGUILayout.createSequentialGroup()
+                .addGroup(newItemGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(newItemGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(newItemGUILayout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addGroup(newItemGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel8)
+                                .addComponent(nameField)
+                                .addComponent(quantityField)
+                                .addComponent(locField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(newItemGUILayout.createSequentialGroup()
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel4))
+                        .addGroup(newItemGUILayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(newItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(newItemGUILayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+        newItemGUILayout.setVerticalGroup(
+            newItemGUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newItemGUILayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(locField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(newItemButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Order");
@@ -146,33 +237,40 @@ public class ManagerGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(itemsTable);
 
+        orderNewButton.setText("New");
+        orderNewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderNewButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(31, 31, 31))))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(orderNewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(112, 112, 112))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(orderNewButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(191, 191, 191)
+                        .addComponent(jLabel1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -196,9 +294,33 @@ public class ManagerGUI extends javax.swing.JFrame {
         }
         else{
             Item item = idb.getItem(productLabel.getText());            
-            idb.order(item.getName(),Integer.parseInt(amountOrderField.getText()),item.getLoc());
+            try {
+                idb.order(item.getName(),Integer.parseInt(amountOrderField.getText()),item.getLoc());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ManagerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_orderGUIButtonActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        newItemGUI.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void newItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemButtonActionPerformed
+        if (checkItemInput()){
+            try {
+                idb.order(nameField.getText(), Integer.parseInt(quantityField.getText()), locField.getText());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ManagerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        newItemGUI.setVisible(false);
+        loadData();
+    }//GEN-LAST:event_newItemButtonActionPerformed
+
+    private void orderNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderNewButtonActionPerformed
+        newItemGUI.setVisible(true);
+    }//GEN-LAST:event_orderNewButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,12 +361,13 @@ public class ManagerGUI extends javax.swing.JFrame {
     }
     
     public boolean openOrderGUI(){
+        DefaultTableModel model = (DefaultTableModel) itemsTable.getModel();
         boolean result = false;
         if (itemsTable.getSelectedRow() == -1) {
             if (itemsTable.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Suppliers table is empty.");
             } else {
-                JOptionPane.showMessageDialog(this, "Select from supplier please.");
+                JOptionPane.showMessageDialog(this, "Select from list please.");
             }
         }
             else{
@@ -256,19 +379,52 @@ public class ManagerGUI extends javax.swing.JFrame {
                     }
         return(result);
     }
+    
+    public boolean checkItemInput(){
+        boolean result = true;
+        if (nameField.getText().equals("") || nameField.getText().isEmpty()){
+            result = false;
+            JOptionPane.showMessageDialog(this,"Field 'name' is not to be empty!");
+        }
+        if (quantityField.getText().equals("") || nameField.getText().isEmpty()){
+            try{
+            int quantity = Integer.parseInt(quantityField.getText());
+            }
+            catch (IllegalArgumentException e){
+                    JOptionPane.showMessageDialog(this,"Field 'quantity' requires number input format!");
+                    }
+            result = false;
+        }
+        if (locField.getText().equals("") || locField.getText().isEmpty()){
+            result = false;
+            JOptionPane.showMessageDialog(this,"Field 'location' is not to be empty!");
+        }
+        return(result);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel amountLabel;
     private javax.swing.JTextField amountOrderField;
     private javax.swing.JButton cancelOrderGUIButton;
     private javax.swing.JTable itemsTable;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField locField;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JButton newItemButton;
+    private javax.swing.JFrame newItemGUI;
     private javax.swing.JFrame orderGUI;
     private javax.swing.JButton orderGUIButton;
+    private javax.swing.JButton orderNewButton;
     private javax.swing.JLabel productLabel;
+    private javax.swing.JTextField quantityField;
     // End of variables declaration//GEN-END:variables
 }
