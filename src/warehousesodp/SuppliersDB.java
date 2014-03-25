@@ -19,7 +19,7 @@ import warehousesodp.GUI.OfficeWorkerGUI;
  *
  * @author Ondrej Tokar <zatokar@gmail.com, http://fuuu.sk/>
  */
-public class DB {
+public class SuppliersDB {
 
     String name, pwd;
     Statement s = null;
@@ -28,59 +28,18 @@ public class DB {
     PreparedStatement prodsQuery;
     DBConnect dbc = new DBConnect();
 
-    public void setUsrAndPwd(String name, char[] pwd) throws ClassNotFoundException {
-        try {
-            this.name = name;
-            this.pwd = new String(pwd);
-            String username = this.logIn();
-            switch (username) {
-                case "office": {
-                    new OfficeWorkerGUI().setVisible(true);
-                };
-                break;
-                // case "officeworker":new OfficeWorker().setVisible(true);
-                //  break;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
 public ResultSet getRS(){
         try {
             prodsQuery = dbc.connect().prepareStatement("SELECT * FROM suppliers");
             rs = prodsQuery.executeQuery();
             
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
 }
-    public String logIn() throws SQLException {
-        try {
-            prodsQuery = dbc.connect().prepareStatement("SELECT * FROM users where username"
-                    + "=? AND password=?");
-            prodsQuery.setString(1, name);
-            prodsQuery.setString(2, pwd);
-            rs = prodsQuery.executeQuery();
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Wrong username or password.");
-                new Login().setVisible(true);
-                prodsQuery.close();
-                return "Error.";
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                prodsQuery.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-       
-        return name;
-    }
-
+    
     public void add(String name, String address, String contact, String other) throws ClassNotFoundException {
         try {
 
@@ -93,12 +52,12 @@ public ResultSet getRS(){
             prodsQuery.executeUpdate();
             prodsQuery.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 prodsQuery.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -111,12 +70,12 @@ public ResultSet getRS(){
             System.out.println("removed");
             prodsQuery.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 prodsQuery.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SuppliersDB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

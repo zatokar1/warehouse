@@ -13,10 +13,11 @@ import warehousemodel.Supplier;
  * @author Ondrej Tokar <zatokar@gmail.com, http://fuuu.sk/>
  */
 public class TheHandler {
-    DB db=new DB();
+    SuppliersDB db=new SuppliersDB();
+    UsersDB udb=new UsersDB();
     public Supplier supplier=null;
   public void logIn(String name, char[] pwd) throws ClassNotFoundException{
-      db.setUsrAndPwd(name, pwd);
+      udb.setUsrAndPwd(name, pwd);
   } 
   public void add(String name, String address, String contact, String other) throws ClassNotFoundException{
       db.add(name, address, contact, other);

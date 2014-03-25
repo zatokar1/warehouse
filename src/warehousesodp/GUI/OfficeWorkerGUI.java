@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import warehousemodel.Supplier;
-import warehousesodp.DB;
+import warehousesodp.SuppliersDB;
 import warehousesodp.TheHandler;
 
 /*
@@ -25,7 +25,7 @@ public class OfficeWorkerGUI extends javax.swing.JFrame {
 
     TheHandler th = new TheHandler();
     Supplier supplierToEdit;
-    DB db = new DB();
+    SuppliersDB db = new SuppliersDB();
     private final DefaultTableModel tableModel = new DefaultTableModel();
     /**
      * Creates new form OfficeWorkerGUI
